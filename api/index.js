@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const sequelize = require('./config/db');
-const defineAssociations = require('./associations');
+const sequelize = require('../src/config/db');
+const defineAssociations = require('../src/associations');
 
 const app = express();
 app.use(cors());
@@ -29,3 +29,5 @@ sequelize.sync({ alter: true }) // crea o modifica las tablas según los modelos
     .catch((err) => {
         console.error('❌ Error al conectar a la base de datos:', err);
     });
+
+module.exports.handler = servless(app); // Exportar la aplicación para pruebas o despliegue en otros entornos
