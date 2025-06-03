@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const sequelize = require('../src/config/db');
-const defineAssociations = require('../src/associations');
+const sequelize = require('./config/db');
+const defineAssociations = require('./associations');
 const servless = require('serverless-http');
 
 const app = express();

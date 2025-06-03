@@ -1,7 +1,7 @@
 // src/models/associations.js
-const { Species } = require('../api/species/species.Model');
-const { Animal } = require('../api/animals/animals.Model');
-const { User } = require('../api/login/user.Model');
+const { Species } = require('./species/species.Model');
+const { Animal } = require('./animals/animals.Model');
+const { User } = require('./login/user.Model');
 
 
 const defineAssociations = () => {
