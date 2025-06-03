@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const sequelize = require('../src/config/db');
 const defineAssociations = require('../src/associations');
+const servless = require('serverless-http');
 
 const app = express();
 app.use(cors());
