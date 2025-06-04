@@ -38,7 +38,9 @@ const login = async (req, res) => {
         if (existing.password !== password) {
             return res.status(401).json({ error: 'Contraseña incorrecta' });
         } else if (existing.password === password) {
-            return res.status(200).json({ id: existing.id });
+            const registeredAt = new Date(existing.createdAt);
+            const formattedDate = `${registeredAt.getDate()}/${registeredAt.getMonth() + 1}/${registeredAt.getFullYear()}`;
+            return res.status(200).json({ id: existing.id, username: existing.username, email: existing.email, registeredAt: formattedDate });
         }
 
 
