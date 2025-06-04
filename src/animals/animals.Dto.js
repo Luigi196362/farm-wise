@@ -4,6 +4,7 @@ class AnimalDto {
         this.id = id;
         this.groupName = groupName;
         this.species = species;
+        this.speciesId = species.id;
         this.quantity = quantity;
 
     }
