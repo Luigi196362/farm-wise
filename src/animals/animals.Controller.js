@@ -57,7 +57,7 @@ const getAnimals = async (req, res) => {
             animalDto.push(new AnimalDto(
                 animal.id,
                 animal.groupName,
-                species.id,
+                animal.speciesId,
                 speciesName,
                 animal.quantity
             ));
