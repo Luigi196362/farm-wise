@@ -10,10 +10,10 @@ const sequelize = new Sequelize(
         port: process.env.DB_PORT,
         dialect: 'postgres',
         dialectOptions: {
-            // ssl: {
-            //     require: true,
-            //     rejectUnauthorized: false // importante para certificados de Aiven
-            // }
+            ssl: {
+                require: true,
+                rejectUnauthorized: false // importante para certificados de Aiven
+            }
         },
         logging: false
     }
