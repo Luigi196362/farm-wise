@@ -1,6 +1,7 @@
 const Animal = require('./animals.Model');
 const User = require('../login/user.Model');
-// const Species = require('../species/species.Model');
+const AnimalDto = require('./animals.Dto');
+const { Species } = require('../species/species.Model');
 
 const registerAnimals = async (req, res) => {
     const { groupName, speciesId, quantity } = req.body;
@@ -10,12 +11,7 @@ const registerAnimals = async (req, res) => {
     }
 
     try {
-        // const existing = await Animal.findAnimalsByGroupName(groupName);
-        // if (existing) {
-        //     return res.status(409).json({ error: 'Ya existe un grupo de animales con ese nombre' });
-        // }
         const userId = req.headers.authorization;
-        //console.log('User ID:', userId);
         if (!userId) {
             return res.status(400).json({ error: 'Falta el ID del usuario en los headers' });
         }
@@ -24,10 +20,14 @@ const registerAnimals = async (req, res) => {
         if (!userExists) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
-        // const speciesExists = await Species.findByPk(speciesId);
+
+        const speciesExists = await Species.findByPk(speciesId);
+        if (!speciesExists) {
+            return res.status(404).json({ error: 'Especie no encontrada' });
+        }
+
         const newAnimal = await Animal.createAnimals({ groupName, speciesId, quantity, userId });
         return res.status(200).json({ message: 'Grupo de animales creado', id: newAnimal.id });
-
 
     } catch (error) {
         console.error('Error en register:', error);
@@ -38,7 +38,6 @@ const registerAnimals = async (req, res) => {
 const getAnimals = async (req, res) => {
     try {
         const userId = req.headers.authorization;
-        //console.log('User ID:', userId);
         if (!userId) {
             return res.status(400).json({ error: 'Falta el ID del usuario en los headers' });
         }
@@ -49,10 +48,25 @@ const getAnimals = async (req, res) => {
         }
 
         const animals = await Animal.findAll(userId);
-        return res.status(200).json(animals);
+        const animalDto = [];
+
+        for (const animal of animals) {
+            const species = await Species.findByPk(animal.speciesId);
+            const speciesName = species.name;
+
+            animalDto.push(new AnimalDto(
+                animal.id,
+                animal.groupName,
+                speciesName,
+                animal.quantity
+            ));
+        }
+
+        return res.status(200).json(animalDto);
     } catch (error) {
         console.error('Error al obtener los animales:', error);
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
 };
+
 module.exports = { registerAnimals, getAnimals };
