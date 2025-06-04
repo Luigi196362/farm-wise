@@ -36,7 +36,7 @@ const Animal = sequelize.define('Animals', {
 
 
 // Funciones auxiliares
-const findSpeciesById = async (id) => {
+const findAnimalById = async (id) => {
   return await Animal.findOne({ where: { id } });
 };
 
@@ -64,4 +64,4 @@ const createAnimals = async (data) => {
 };
 
 
-module.exports = { Animal, createAnimals, findAll, findAnimalsByGroupName, findSpeciesById };
+module.exports = { Animal, createAnimals, findAll, findAnimalsByGroupName, findAnimalById };

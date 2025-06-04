@@ -67,6 +67,27 @@ const getAnimals = async (req, res) => {
         console.error('Error al obtener los animales:', error);
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
+
 };
 
-module.exports = { registerAnimals, getAnimals };
+const findAnimalById = async (req, res) => {
+    const animalId = req.params.id;
+
+    if (!animalId) {
+        return res.status(400).json({ error: 'Falta el ID del animal' });
+    }
+
+    try {
+        const animal = await Animal.findAnimalById(animalId);
+        if (!animal) {
+            return res.status(404).json({ error: 'Animal no encontrado' });
+        }
+
+
+        return res.status(200).json(animal);
+    } catch (error) {
+        console.error('Error al buscar el animal:', error);
+        return res.status(500).json({ error: 'Error interno del servidor' });
+    }
+}
+module.exports = { registerAnimals, getAnimals, findAnimalById };
