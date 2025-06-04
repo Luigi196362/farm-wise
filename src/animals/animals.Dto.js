@@ -1,10 +1,10 @@
 class AnimalDto {
 
-    constructor(id, groupName, species, quantity) {
+    constructor(id, groupName, species, speciesId, quantity) {
         this.id = id;
         this.groupName = groupName;
         this.species = species;
-        this.speciesId = species.id;
+        this.speciesid = speciesId;
         this.quantity = quantity;
 
     }
