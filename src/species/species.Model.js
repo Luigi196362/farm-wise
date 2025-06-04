@@ -49,5 +49,8 @@ const createSpecies = async (data) => {
     return await Species.create(data);
 };
 
+const findSpeciesById = async (id) => {
+    return await Species.findOne({ where: { id } });
+};
 
-module.exports = { Species, createSpecies, findSpeciesByName, findAll, findByPk };
+module.exports = { Species, createSpecies, findSpeciesByName, findAll, findByPk, findSpeciesById };

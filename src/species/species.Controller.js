@@ -32,15 +32,6 @@ const registerSpecies = async (req, res) => {
     }
 };
 
-// const getSpecies = async (req, res) => {
-//     try {
-//         const species = await Species.findAll();
-//         return res.status(200).json(species);
-//     } catch (error) {
-//         console.error('Error al obtener las especies:', error);
-//         return res.status(500).json({ error: 'Error interno del servidor' });
-//     }
-// };
 
 const getSpecies = async (req, res) => {
     try {
@@ -63,4 +54,27 @@ const getSpecies = async (req, res) => {
     }
 };
 
-module.exports = { registerSpecies, getSpecies };
+
+
+const findSpeciesById = async (req, res) => {
+    const speciesId = req.params.id;
+    //console.log('ID de especie:', speciesId);
+    if (!speciesId) {
+        return res.status(400).json({ error: 'Falta el ID de la especie' });
+    }
+
+    try {
+        const species = await Species.findSpeciesById(speciesId);
+        if (!species) {
+            return res.status(404).json({ error: 'Especie no encontrado' });
+        }
+
+
+        return res.status(200).json(species);
+    } catch (error) {
+        console.error('Error al buscar la especie:', error);
+        return res.status(500).json({ error: 'Error interno del servidor' });
+    }
+}
+
+module.exports = { registerSpecies, getSpecies, findSpeciesById };
